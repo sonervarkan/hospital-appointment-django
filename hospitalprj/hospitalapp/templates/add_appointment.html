@@ -51,15 +51,13 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
             $(document).ready(function() {
-                // Değişken tanımlamaları
+               
                 const departmentSelect = $("#department_id");
                 const doctorSelect = $("#doctor_id");
                 const dateInput = $("#appointmentdate");
                 const timeSelect = $("#time_id");
 
-                //---------------------------------------------------------
-                // Departman Değişimi
-                //---------------------------------------------------------
+              
                 departmentSelect.change(function() {
                     const departmentId = $(this).val();
                     doctorSelect.empty().append('<option value="">--Select Doctor--</option>');
@@ -76,17 +74,14 @@
                             }
                         });
                     }
-                    // Departman değiştiğinde saatleri sıfırla
+                  
                     timeSelect.find('option').each(function() {
                         const originalText = $(this).data('original-hour');
                         $(this).prop('disabled', false).text(originalText);
                     });
                 });
 
-                //---------------------------------------------------------
-                // Doktor veya Tarih Değişimi
-                //---------------------------------------------------------
-                // Orijinal saat metinlerini sakla
+           
                 timeSelect.find('option').each(function() {
                     if ($(this).val()) {
                         $(this).data('original-hour', $(this).text());
@@ -97,7 +92,7 @@
                     const doctorId = doctorSelect.val();
                     const date = dateInput.val();
 
-                    // Tüm saatleri sıfırla
+                 
                     timeSelect.find('option').each(function() {
                         const originalText = $(this).data('original-hour');
                         $(this).prop('disabled', false).text(originalText);
@@ -121,8 +116,7 @@
                         });
                     }
                 }
-                
-                // Olay dinleyicileri
+                            
                 doctorSelect.on("change", updateTimes);
                 dateInput.on("change", updateTimes);
             });

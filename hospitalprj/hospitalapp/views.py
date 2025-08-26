@@ -43,7 +43,7 @@ def add_doctor(request):
 
         return redirect('list_doctor')
 
-    # GET isteği için formun gösterilmesi
+
     departments = Departments.objects.all()
     return render(request, 'add_doctor.html', {'departments': departments})
 
