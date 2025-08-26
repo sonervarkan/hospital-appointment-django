@@ -1,0 +1,131 @@
+{% load static %}
+<html>
+    <head>
+        <title>Add Appointment</title>
+        <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    </head>
+    <body>
+        <div class="navbar">
+            <ul>
+                <li><a href="{% url 'home' %}"> Home Page </a></li>
+            </ul>
+        </div>
+        <form action="{% url 'add_appointment' %}" method="post">
+            {% csrf_token %}
+            <label for="patientname">Patient Name</label>
+            <input type="text" id="patientname" name="patientname"></input>
+
+            <label for="patientsurname">Patient Surname</label>
+            <input type="text" id="patientsurname" name="patientsurname"></input>
+
+            <label for="patienttcno">Patient Tc No</label>
+            <input type="text" id="patienttcno" name="patienttcno"></input>
+
+            <label for="department_id"> Department Name</label>
+            <select name="department_id" id="department_id">
+                <option value="">--Select Department--</option>
+                {% for department in departments %}
+                    <option value="{{ department.id }}">{{ department.departmentname }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="doctor_id"> Doctor Name Surname</label>
+            <select name="doctor_id" id="doctor_id">
+                <option value="">--Select Doctor--</option>
+            </select>
+
+            <label for="appointmentdate">Appointment Date</label>
+            <input type="date" id="appointmentdate" name="appointmentdate"></input>
+
+            <label for="time_id"> Hour</label>
+            <select name="time_id" id="time_id">
+                <option value="">--Select Time--</option>
+                {% for time in times %}
+                    <option value="{{ time.id }}">{{ time.hour }}</option>
+                {% endfor %}
+            </select>
+            
+            <button type="submit">Add</button>
+        </form>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                // Değişken tanımlamaları
+                const departmentSelect = $("#department_id");
+                const doctorSelect = $("#doctor_id");
+                const dateInput = $("#appointmentdate");
+                const timeSelect = $("#time_id");
+
+                //---------------------------------------------------------
+                // Departman Değişimi
+                //---------------------------------------------------------
+                departmentSelect.change(function() {
+                    const departmentId = $(this).val();
+                    doctorSelect.empty().append('<option value="">--Select Doctor--</option>');
+                    
+                    if (departmentId) {
+                        $.ajax({
+                            url: "{% url 'get_doctors_by_department' %}",
+                            data: { 'department_id': departmentId },
+                            dataType: 'json',
+                            success: function(doctors) {
+                                doctors.forEach(function(doctor) {
+                                    doctorSelect.append('<option value="' + doctor.id + '">' + doctor.doctornamesurname + '</option>');
+                                });
+                            }
+                        });
+                    }
+                    // Departman değiştiğinde saatleri sıfırla
+                    timeSelect.find('option').each(function() {
+                        const originalText = $(this).data('original-hour');
+                        $(this).prop('disabled', false).text(originalText);
+                    });
+                });
+
+                //---------------------------------------------------------
+                // Doktor veya Tarih Değişimi
+                //---------------------------------------------------------
+                // Orijinal saat metinlerini sakla
+                timeSelect.find('option').each(function() {
+                    if ($(this).val()) {
+                        $(this).data('original-hour', $(this).text());
+                    }
+                });
+
+                function updateTimes() {
+                    const doctorId = doctorSelect.val();
+                    const date = dateInput.val();
+
+                    // Tüm saatleri sıfırla
+                    timeSelect.find('option').each(function() {
+                        const originalText = $(this).data('original-hour');
+                        $(this).prop('disabled', false).text(originalText);
+                    });
+
+                    if (doctorId && date) {
+                        $.ajax({
+                            url: '{% url "get_available_hours" %}',
+                            data: { 'doctor_id': doctorId, 'appointment_date': date },
+                            dataType: 'json',
+                            success: function(data) {
+                                data.forEach(function(time) {
+                                    if (time.is_booked) {
+                                        const option = timeSelect.find('option[value="' + time.id + '"]');
+                                        if (option.length) {
+                                            option.prop('disabled', true).text(time.hour + ' (dolu)');
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                    }
+                }
+                
+                // Olay dinleyicileri
+                doctorSelect.on("change", updateTimes);
+                dateInput.on("change", updateTimes);
+            });
+        </script>
+    </body>
+</html>

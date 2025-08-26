@@ -1,0 +1,33 @@
+{% load static %}
+<html>
+    <head>
+        <title>List Doctor</title>
+        
+        <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    </head>
+    <body>
+        <div class="navbar">
+            <ul>
+                <li><a href="{% url 'home' %}"> Home Page </a></li>
+                
+            </ul>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Doctor Name Surname</th>
+                    <th>Department Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                {%for doctor in doctors %}
+                    <tr>
+                        <td>{{doctor.doctornamesurname}}</td>
+                        <td>{{doctor.department.departmentname}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </body>
+</html>

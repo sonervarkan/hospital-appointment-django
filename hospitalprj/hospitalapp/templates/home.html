@@ -1,0 +1,25 @@
+{% load static %}
+<html>
+    <head>
+        <title>Home Page</title>
+        
+        <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    </head>
+    <body>
+        <div class="navbar">
+            <ul>
+                <li><a href="#"> Admin </a></li>
+                <li><a href="{% url 'list_department' %}"> List Department </a></li>
+                <li><a href="{% url 'add_department' %}"> Add Department </a></li>
+                <li><a href="{% url 'list_doctor' %}"> List Doctor </a></li>
+                <li><a href="{% url 'add_doctor' %}"> Add Doctor </a></li>
+                <li><a href="{% url 'list_patient' %}"> List Patient </a></li>
+                <li><a href="{% url 'add_patient' %}"> Add Patient </a></li>
+                <li><a href="{% url 'list_time' %}"> List Time </a></li>
+                <li><a href="{% url 'add_time' %}"> Add Time </a></li>
+                <li><a href="{% url 'list_appointment' %}"> List Appointment </a></li>
+                <li><a href="{% url 'add_appointment' %}"> Add Appointment </a></li>
+            </ul>
+        </div>
+    </body>
+</html>

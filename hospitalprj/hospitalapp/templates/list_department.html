@@ -1,0 +1,31 @@
+{% load static %}
+<html>
+    <head>
+        <title>List Epartment</title>
+        
+        <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    </head>
+    <body>
+        <div class="navbar">
+            <ul>
+                <li><a href="{% url 'home' %}"> Home Page </a></li>
+                
+            </ul>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Department Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                {%for department in departments %}
+                    <tr>
+                        <td>{{department.departmentname}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </body>
+</html>

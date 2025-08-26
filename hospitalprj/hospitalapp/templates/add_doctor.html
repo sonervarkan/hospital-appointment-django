@@ -1,0 +1,31 @@
+{% load static %}
+<html>
+    <head>
+        <title>Add Doctor</title>
+        
+        <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    </head>
+    <body>
+        <div class="navbar">
+            <ul>
+                <li><a href="{% url 'home' %}"> Home Page </a></li>
+                
+            </ul>
+        </div>
+        <form action="{% url 'add_doctor' %}" method="post">
+             {% csrf_token %}
+            <label for="doctornamesurname">Doctor Name Surname</label>
+            <input type="text" id="doctornamesurname" name="doctornamesurname"></input>
+
+            <label for="department_id"> Department Name</label>
+            <select name="department_id" id="department_id">
+                {% for department in departments %}
+                    <option value="{{ department.id }}">{{ department.departmentname }}</option>
+                {% endfor %}
+            </select>
+            
+
+            <button type="submit">Add</button>
+        </form>
+    </body>
+</html>

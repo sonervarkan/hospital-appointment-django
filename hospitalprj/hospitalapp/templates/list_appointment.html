@@ -1,0 +1,45 @@
+{% load static %}
+<html>
+    <head>
+        <title>List Appointment</title>
+        
+        <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    </head>
+    <body>
+        <div class="navbar">
+            <ul>
+                <li><a href="{% url 'home' %}"> Home Page </a></li>
+                
+            </ul>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    
+                    <th>Patient Name</th>
+                    <th>Patient Surname</th>
+                    <th>Patient Tc No</th>
+                    <th>Department Name</th>
+                    <th>Doctor Name Surname</th>
+                    <th>Appointment Date</th>
+                    <th>Time</th>
+                     
+                </tr>
+            </thead>
+            <tbody>
+                {%for appointment in appointments %}
+                    <tr>
+                        <td>{{appointment.patient.patientname}}</td>
+                        <td>{{appointment.patient.patientsurname}}</td>
+                        <td>{{appointment.patient.patienttcno}}</td>
+                        <td>{{appointment.department.patientname}}</td>
+                        <td>{{appointment.doctor.doctornamesurname}}</td>
+                        <td>{{appointment.appointmentdate}}</td>
+                        <td>{{appointment.time.hour}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </body>
+</html>

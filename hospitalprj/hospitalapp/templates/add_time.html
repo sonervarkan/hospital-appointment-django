@@ -1,0 +1,23 @@
+{% load static %}
+<html>
+    <head>
+        <title>Add Time</title>
+        
+        <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    </head>
+    <body>
+        <div class="navbar">
+            <ul>
+                <li><a href="{% url 'home' %}"> Home Page </a></li>
+                
+            </ul>
+        </div>
+        <form action="{% url 'add_time' %}" method="post">
+             {% csrf_token %}
+            <label for="hour">Hour</label>
+            <input type="text" id="hour" name="hour"></input>
+
+            <button type="submit">Add</button>
+        </form>
+    </body>
+</html>

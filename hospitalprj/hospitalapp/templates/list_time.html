@@ -1,0 +1,31 @@
+{% load static %}
+<html>
+    <head>
+        <title>List Time</title>
+        
+        <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    </head>
+    <body>
+        <div class="navbar">
+            <ul>
+                <li><a href="{% url 'home' %}"> Home Page </a></li>
+                
+            </ul>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Hour</th>
+                </tr>
+            </thead>
+            <tbody>
+                {%for time in times %}
+                    <tr>
+                        <td>{{time.hour}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </body>
+</html>
