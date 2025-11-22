@@ -4,6 +4,7 @@ A Django-based web application for managing hospital departments, doctors, patie
 The system includes dynamic doctor filtering based on department selection and displays available/unavailable hours using AJAX.
 
 ## Project Structure
+```
 hospitalprj/
  ├── hospitalapp/
  │   ├── migrations/
@@ -32,6 +33,7 @@ hospitalprj/
  │   └── wsgi.py
  ├── manage.py
  └── README.md
+```
 
 ## Features
 ### Department Management
