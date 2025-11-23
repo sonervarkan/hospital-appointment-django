@@ -167,4 +167,3 @@ http://127.0.0.1:8000/
 
 ## License
 This project currently has no license.
-You may add one if you plan to publish or distribute it publicly.
